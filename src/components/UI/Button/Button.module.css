@@ -1,0 +1,6 @@
+.button {
+  cursor: pointer;
+  font: inherit;
+  border: none;
+  border-radius: 25px;
+}
