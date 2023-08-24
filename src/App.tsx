@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     (async () => {
       const meals = await getMeals(MEALS_MOCK_URL);
-      console.log(meals);
       setMeals(meals);
     })();
   }, []);
