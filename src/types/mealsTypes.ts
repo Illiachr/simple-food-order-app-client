@@ -1,8 +1,8 @@
 interface IMeal {
-  "id": string,
-  "name": string,
-  "description": string,
-  "price": number
+  'id': string,
+  'name': string,
+  'description': string,
+  'price': number
 }
 
 type TMeals = Array<IMeal>;
@@ -10,4 +10,4 @@ type TMeals = Array<IMeal>;
 export type {
   IMeal,
   TMeals
-}
+};

@@ -1,14 +1,16 @@
-import { Fragment } from 'react'
-import Header from '../../components/Header/Header';
-import { TMeals } from '../../types/mealsTypes';
-import Meals from '../../components/Meals/Meals/Meals';
+import { Fragment, useState } from 'react';
+import Header from '../../components/Header/Header.tsx';
+import { TMeals } from '../../types/mealsTypes.tsx';
+import Meals from '../../components/Meals/Meals/Meals.tsx';
+import Cart from '../../components/Cart/Cart.tsx';
+import { ICartItem } from '../../types/cartTypes.ts';
 
 type Props = {
   headerTitle: string,
   headerBackgroundImg: string,
   itemsTotal: number,
   mealsData: TMeals,
-  onCartButtonClick: () => void
+  cartItems: Array<ICartItem>
 }
 
 const Layout = ({
@@ -16,10 +18,19 @@ const Layout = ({
   headerBackgroundImg,
   itemsTotal,
   mealsData,
-  onCartButtonClick
+  cartItems
 }: Props) => {
+
+  const [popupVisible, setPopupVisible] = useState(false);
+
+  const onCartButtonClick = () => {
+    setPopupVisible(true);
+  };
+
+
   return (
     <Fragment>
+      { popupVisible && <Cart setVisibility={setPopupVisible} cartItems={cartItems}/>}
       <Header
         title={headerTitle}
         image={headerBackgroundImg}
