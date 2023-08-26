@@ -4,18 +4,17 @@ import Backdrop from './Backdrop/Backdrop';
 import PopupOverlay from './PopupOverlay/PopupOverlay';
 
 type Props = {
+  overlaysElemId: string,
   children: ReactNode,
-  setVisibility: () => void
+  setVisibility: (visibility: boolean) => void
 }
 
-const OVERLAYS_ID = 'overlays';
-const overlaysPortalElem = document.getElementById(OVERLAYS_ID);
-
-const Popup = ({ setVisibility, children }: Props) => {
+const Popup = ({ overlaysElemId, setVisibility, children }: Props) => {
+  const overlaysPortalElem = document.getElementById(overlaysElemId);
   return (
     <Fragment>
       {overlaysPortalElem && createPortal(<Backdrop setVisibility={setVisibility}/>, overlaysPortalElem)}
-      {(overlaysPortalElem && children) && createPortal(<PopupOverlay setVisibility={setVisibility}>{children}</PopupOverlay>, overlaysPortalElem)}
+      {(overlaysPortalElem && children) && createPortal(<PopupOverlay>{children}</PopupOverlay>, overlaysPortalElem)}
     </Fragment>
   );
 };

@@ -3,7 +3,7 @@ import MealItemForm from '../MealItemForm/MealItemForm';
 import classes from './MealItem.module.css';
 
 type Props = {
-  "meal": IMeal
+  meal: IMeal
 }
 
 const MealItem = ({ meal }: Props) => {
@@ -15,10 +15,10 @@ const MealItem = ({ meal }: Props) => {
         <div className={classes.price}>{`$${meal.price.toFixed(2)}`}</div>
       </div>
       <div className="">
-        <MealItemForm inputId={`qty_${meal.id}`}onSubmit={() => {}}/>
+        <MealItemForm inputId={`qty_${meal.id}`} meal={meal} />
       </div>
     </li>
-  )
+  );
 };
 
 export default MealItem;

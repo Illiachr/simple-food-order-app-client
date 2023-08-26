@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 import classes from './Card.module.css';
 
 type Props = {
@@ -13,7 +13,7 @@ const Card = ({ children, className }: Props) => {
   }
   return (
     <div className={cls.join(' ')}>{children}</div>
-  )
+  );
 };
 
 export default Card;

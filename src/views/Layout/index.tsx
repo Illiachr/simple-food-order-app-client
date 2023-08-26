@@ -1,26 +1,25 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
+import { IMeal } from '../../types/mealsTypes.ts';
 import Header from '../../components/Header/Header.tsx';
-import { TMeals } from '../../types/mealsTypes.tsx';
 import Meals from '../../components/Meals/Meals/Meals.tsx';
 import Cart from '../../components/Cart/Cart.tsx';
-import { ICartItem } from '../../types/cartTypes.ts';
+import CartContext from '../../store/context/CartContext.ts';
 
 type Props = {
   headerTitle: string,
   headerBackgroundImg: string,
-  itemsTotal: number,
-  mealsData: TMeals,
-  cartItems: Array<ICartItem>
+  mealsData: Array<IMeal>,
+  overlaysElemId: string
 }
 
 const Layout = ({
   headerTitle,
   headerBackgroundImg,
-  itemsTotal,
   mealsData,
-  cartItems
+  overlaysElemId
 }: Props) => {
 
+  const { cartItems } = useContext(CartContext);
   const [popupVisible, setPopupVisible] = useState(false);
 
   const onCartButtonClick = () => {
@@ -30,18 +29,24 @@ const Layout = ({
 
   return (
     <Fragment>
-      { popupVisible && <Cart setVisibility={setPopupVisible} cartItems={cartItems}/>}
+      { popupVisible
+        && 
+        <Cart
+          overlaysElemId={overlaysElemId}
+          setVisibility={setPopupVisible}
+          cartItems={cartItems}
+        />}
       <Header
         title={headerTitle}
         image={headerBackgroundImg}
-        itemsTotal={itemsTotal}
+        itemsTotal={cartItems.length}
         onCartButtonClick={onCartButtonClick}
       />
       <main>
         <Meals mealsData={mealsData} />
       </main>
     </Fragment>
-  )
-}
+  );
+};
 
 export default Layout;

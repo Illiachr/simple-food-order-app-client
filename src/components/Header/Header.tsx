@@ -18,7 +18,7 @@ const Header = ({ title, image, itemsTotal, onCartButtonClick }: Props) => {
       </header>
       <img src={image} className={classes['main-image']} />
     </Fragment>
-  )
+  );
 };
 
 export default Header;

@@ -1,23 +1,38 @@
+import { useContext } from 'react';
 import { ICartItem } from '../../../types/cartTypes';
 import Button from '../../UI/Button/Button';
 import classes from './CartItem.module.css';
+import CartContext from '../../../store/context/CartContext';
 
 type Props = {
-  data: ICartItem,
-  onAdd: () => void
-  onRemove: () => void
-}
+  data: ICartItem;
+};
 
-const CartItem = ({ data, onAdd, onRemove }: Props) => {
+const CartItem = ({ data }: Props) => {
+  const { addCartItem, removeCartItem } = useContext(CartContext);
+
+  const onAdd = () => {
+    addCartItem(data);
+  };
+
+  const onRemove = () => {
+    removeCartItem(data);
+  };
+
   return (
-    <div className={classes['cart-item']}>
-      <div className="">{data.name}</div>
-      <div className="">{data.description}</div>
-      <div className="">{data.price}</div>
-      <div className="">x {data.amount}</div>
-      <Button text='Add' onClick={onAdd}/>
-      <Button text='Remove' onClick={onRemove}/>
-    </div>
+    <li className={classes['cart-item']}>
+      <div>
+        <h2>{data.name}</h2>
+        <div className={classes.summary}>
+          <div className={classes.price}>{data.price}</div>
+          <div className={classes.amount}>x {data.amount}</div>
+        </div>
+      </div>
+      <div className={classes.actions}>
+        <Button text="+" onClick={onAdd} />
+        <Button text="-" onClick={onRemove} />
+      </div>
+    </li>
   );
 };
 
