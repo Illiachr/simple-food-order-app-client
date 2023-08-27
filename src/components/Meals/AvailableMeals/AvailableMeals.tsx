@@ -15,7 +15,7 @@ const AvailableMeals = ({ mealsData }: Props) => {
         {mealsData.length > 0 ? (<ul>{mealsList}</ul>) : <h2>Loading ...</h2>}
       </Card>
     </section>
-  )
-}
+  );
+};
 
-export default AvailableMeals
+export default AvailableMeals;

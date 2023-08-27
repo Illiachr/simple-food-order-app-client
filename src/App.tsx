@@ -1,14 +1,16 @@
-import Layout from "./views/Layout";
+import Layout from './views/Layout';
 import mealsImg from './assets/meals.jpg';
-import { useEffect, useState } from "react";
-import { TMeals } from "./types/mealsTypes";
+import { IMeal } from './types/mealsTypes';
+import { useEffect, useState } from 'react';
+import CartContextProvider from './store/context/CartContextProvider';
 
+const OVERLAYS_ID = 'overlays';
 const MEALS_MOCK_URL = './src/store/mock/mock-data.json';
 
 function App() {
-  const [meals, setMeals] = useState<TMeals>([]);
+  const [meals, setMeals] = useState<Array<IMeal>>([]);
 
-  const getMeals = async(url: string): Promise<TMeals> => {
+  const getMeals = async (url: string): Promise<Array<IMeal>> => {
     const res = await fetch(url);
     const data = await res.json();
     return data;
@@ -21,18 +23,16 @@ function App() {
     })();
   }, []);
 
-  const cartClickHandler = () => {
-  };
-
   return (
-    <Layout
-      headerTitle="OrderYourMeals"
-      headerBackgroundImg={mealsImg}
-      itemsTotal={3}
-      onCartButtonClick={cartClickHandler}
-      mealsData={meals}
-    />
-  )
+    <CartContextProvider>
+      <Layout
+        headerTitle="OrderYourMeals"
+        headerBackgroundImg={mealsImg}
+        mealsData={meals}
+        overlaysElemId={OVERLAYS_ID}
+      />
+    </CartContextProvider>
+  );
 }
 
-export default App
+export default App;

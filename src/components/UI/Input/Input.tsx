@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import classes from './Input.module.css';
 
 interface InputProps {
@@ -7,7 +8,7 @@ interface InputProps {
   max?: number,
   step?: number,
   value: string | number,
-  onChange: (e: HTMLInputElement) => void
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 type Props = {
@@ -21,7 +22,7 @@ const Input = ({ label, inputProps }: Props) => {
       <label htmlFor={inputProps.id}>{label}</label>
       <input {...inputProps} />
     </div>
-  )
+  );
 };
 
 export default Input;

@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment } from 'react';
 import MealsSummary from '../MealsSummary/MealsSummary';
 import AvailableMeals from '../AvailableMeals/AvailableMeals';
 import { TMeals } from '../../../types/mealsTypes';
@@ -13,7 +13,7 @@ const Meals = ({ mealsData }: Props) => {
       <MealsSummary />
       <AvailableMeals mealsData={mealsData} />
     </Fragment>
-  )
+  );
 };
 
 export default Meals;
