@@ -12,11 +12,19 @@ const CartItem = ({ data }: Props) => {
   const { addCartItem, removeCartItem } = useContext(CartContext);
 
   const onAdd = () => {
-    addCartItem(data);
+    const updateCartItemData = {
+      ...data,
+      amount: 1
+    };
+    addCartItem(updateCartItemData);
   };
 
   const onRemove = () => {
-    removeCartItem(data);
+    const updateCartItemData = {
+      ...data,
+      amount: 1
+    };
+    removeCartItem(updateCartItemData);
   };
 
   return (

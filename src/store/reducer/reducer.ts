@@ -34,8 +34,23 @@ const actionHandlers = {
     const { cartItems, totalAmount } = state;
     const { val: removedItem } = action;
 
-    const updatedTotalAmount = totalAmount + removedItem.price * removedItem.amount;
-    const updatedCartItems = cartItems.filter(item => item.id !== removedItem.id);
+    const updatedTotalAmount = totalAmount - removedItem.price * removedItem.amount;
+
+    const existingCartItemIdx = cartItems.findIndex(item => item.id === removedItem.id);
+    let updatedCartItems;
+
+    if (existingCartItemIdx >= 0 && cartItems[existingCartItemIdx].amount > 1) {
+      const existingCartItem = cartItems[existingCartItemIdx];
+      const updatedCartItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount - removedItem.amount
+      };
+      updatedCartItems = [...cartItems];
+      updatedCartItems[existingCartItemIdx] = updatedCartItem;
+      return { cartItems: updatedCartItems, totalAmount: updatedTotalAmount };
+    }
+
+    updatedCartItems = cartItems.filter(item => item.id !== removedItem.id);
 
     return { cartItems: updatedCartItems, totalAmount: updatedTotalAmount };
   }
