@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { IMeal } from '../../types/mealsTypes.ts';
 import Header from '../../components/Header/Header.tsx';
 import Meals from '../../components/Meals/Meals/Meals.tsx';
@@ -22,6 +22,17 @@ const Layout = ({
   const { cartItems } = useContext(CartContext);
   const [popupVisible, setPopupVisible] = useState(false);
 
+  useEffect(() => {
+    if (popupVisible) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '15px';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
+    };
+  }, [popupVisible]);
+
   const onCartButtonClick = () => {
     setPopupVisible(true);
   };
@@ -34,7 +45,6 @@ const Layout = ({
         <Cart
           overlaysElemId={overlaysElemId}
           setVisibility={setPopupVisible}
-          cartItems={cartItems}
         />}
       <Header
         title={headerTitle}

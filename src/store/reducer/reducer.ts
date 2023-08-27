@@ -1,4 +1,4 @@
-import { EActionType, IAction, ICartState } from '../../types/reducerTypes';
+import { EActionType, IAction, ICartState } from '../../types/reducerTypes.ts';
 
 const CART_DEFAULT_STATE = {
   cartItems: [],
@@ -8,18 +8,36 @@ const CART_DEFAULT_STATE = {
 const actionHandlers = {
   [EActionType.ADD_ITEM]: (state: ICartState, action: IAction) => {
     const { cartItems, totalAmount } = state;
-    const { val: newCartItem } = action;
+    const { val: cartItemData } = action;
+    const updatedTotalAmount = totalAmount + cartItemData.price * cartItemData.amount;
+    
+    const existingCartItemIdx = cartItems.findIndex(item => item.id === cartItemData.id);
+    let updatedCartItems;
 
-    const updatedCartItems = [ action.val, ...cartItems];
-    const updatedTotalAmount = totalAmount + newCartItem.price * newCartItem.amount;
+    if (existingCartItemIdx >= 0) {
+      const existingCartItem = cartItems[existingCartItemIdx];
+      const updatedCartItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + cartItemData.amount
+      };
+      updatedCartItems = [...cartItems];
+      updatedCartItems[existingCartItemIdx] = updatedCartItem;
+      return { cartItems: updatedCartItems, totalAmount: updatedTotalAmount };
+    }
+
+    updatedCartItems = [ action.val, ...cartItems];
 
     return { cartItems: updatedCartItems, totalAmount: updatedTotalAmount };
   },
+
   [EActionType.REMOVE_ITEM]: (state: ICartState, action: IAction) => {
     const { cartItems, totalAmount } = state;
     const { val: removedItem } = action;
+
+    const updatedTotalAmount = totalAmount + removedItem.price * removedItem.amount;
     const updatedCartItems = cartItems.filter(item => item.id !== removedItem.id);
-    return { cartItems: updatedCartItems, totalAmount };
+
+    return { cartItems: updatedCartItems, totalAmount: updatedTotalAmount };
   }
 };
 

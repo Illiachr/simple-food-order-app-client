@@ -1,23 +1,25 @@
-import { ICartItem } from '../../types/cartTypes';
 import Button from '../UI/Button/Button';
 import CartItem from './CartItem/CartItem';
 import classes from './Cart.module.css';
 import Popup from '../UI/Popup/Popup';
+import { useContext } from 'react';
+import CartContext from '../../store/context/CartContext';
 
 type Props = {
   overlaysElemId: string;
   setVisibility: (visibility: boolean) => void;
-  cartItems: Array<ICartItem>;
 };
 
 const Cart = ({
   overlaysElemId,
-  cartItems,
   setVisibility,
 }: Props) => {
+  const { cartItems, totalAmount } = useContext(CartContext);
   const onCancelHandler = () => {
     setVisibility(false);
   };
+
+  const totalOrderPrice = `$${totalAmount.toFixed(2)}`;
 
   const cartItemsList = (
     <ul className={classes['cart-items']}>
@@ -39,16 +41,16 @@ const Cart = ({
       {cartItemsList}
       <div className={classes.total}>
         <span>Total</span>
-        <span>{cartItems.length}</span>
+        <span>{totalOrderPrice}</span>
       </div>
       <div className={classes.actions}>
         <Button
           className={classes['button-alt']}
-          text="Cancel"
+          text='Cancel'
           onClick={onCancelHandler}
         />
         {cartItems && cartItems.length !== 0 && (
-          <Button className={classes.button} text="Order" onClick={() => {}} />
+          <Button className={classes.button} text='Order' onClick={() => {}} />
         )}
       </div>
     </Popup>
